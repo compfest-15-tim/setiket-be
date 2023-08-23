@@ -2,7 +2,7 @@ import { supabase } from "../config/db";
 import { Request, Response } from "express";
 import { type signUpBodySchemaType } from "../dtos/validation.schema";
 
-export const signUpService = () => async (req: Request, res: Response) => {
+export const signUpService = async (req: Request, res: Response) => {
   // Get data
   const {
     body: { fullName, email, password, role },

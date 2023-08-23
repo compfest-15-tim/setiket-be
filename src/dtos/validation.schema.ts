@@ -16,5 +16,4 @@ export const signInBodySchema = z.object({
     password: z.string(),
   }),
 });
-
-export type signInBodySchemaType = z.TypeOf<typeof signUpBodySchema>;
+export type signInBodySchemaType = z.TypeOf<typeof signInBodySchema>;
