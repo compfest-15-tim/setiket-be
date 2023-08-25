@@ -2,7 +2,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 // import { errorMiddleware } from "./middleware/errorMiddleware";
-import { publicRouter } from "./routes/publicRoutes";
+import publicRoutes from "./routes/publicRoutes";
 import bodyParser from "body-parser";
 import multer from "multer";
 
@@ -24,7 +24,7 @@ app.use(cors(corsOptions));
 app.use(upload.none());
 
 // Public router
-app.use("/api", publicRouter);
+app.use("/api", publicRoutes);
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
