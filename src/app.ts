@@ -12,7 +12,13 @@ dotenv.config();
 const port = process.env.PORT || 8000;
 
 // Cors
-app.use(cors());
+// IMPORTANT TO WRITE COOKIE IN CLIENT SIDE WITH FETCH!
+// ALSO USE CREDENTIALS: "include" IN FETCH!
+const corsOptions = {
+  origin: process.env.CLIENT_URL,
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
 // Parse FormData in body request
 app.use(upload.none());
