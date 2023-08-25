@@ -20,17 +20,23 @@ export const checkUserRolePermissions = (requiredRoles: string[]) => {
           .json({ message: error.message });
       }
 
-      const userRole = data.user?.role;
+      const { data: role, error: userError } = await supabase
+        .from("users")
+        .select("role")
+        .eq("id", data.user.id);
+
+      if (!role) return res.status(404).json("User not found");
+
+      const userRole = role.map((r) => {
+        return r.role as string;
+      });
+      
       if (!userRole) {
-        return res
-          .status(403)
-          .json({ message: "Access denied: insufficient role" });
+        return res.status(403).json({ message: "insufficient role" });
       }
 
-      if (!requiredRoles.includes(userRole)) {
-        return res
-          .status(403)
-          .json({ message: "Access denied: insufficient role" });
+      if (!requiredRoles.includes(userRole[0])) {
+        return res.status(403).json({ message: "Forbidden" });
       }
 
       req.body.userId = data.user?.id;
