@@ -1,7 +1,7 @@
 import { supabase } from "../config/db";
 import { Request, Response, NextFunction } from "express";
 
-export const checkUserRolePermissions = async (requiredRoles: string[]) => {
+export const checkUserRolePermissions = (requiredRoles: string[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     const bearerHeader = req.headers["authorization"];
     const token = bearerHeader?.split(" ")[1];
@@ -22,11 +22,15 @@ export const checkUserRolePermissions = async (requiredRoles: string[]) => {
 
       const userRole = data.user?.role;
       if (!userRole) {
-        return res.status(403).json({ message: "Access denied: insufficient role" });
+        return res
+          .status(403)
+          .json({ message: "Access denied: insufficient role" });
       }
 
       if (!requiredRoles.includes(userRole)) {
-        return res.status(403).json({ message: "Access denied: insufficient role" });
+        return res
+          .status(403)
+          .json({ message: "Access denied: insufficient role" });
       }
 
       req.body.id = data.user?.id;
