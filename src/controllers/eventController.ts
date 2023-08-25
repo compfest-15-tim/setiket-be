@@ -10,12 +10,12 @@ const createEvent: RequestHandler = async (req, res, next) => {
   const imageFiles = req.files as Express.Multer.File[];
 
   try {
-    const imageUrl = await imageUploadServices.imageUpload(imageFiles);
+    const images = await imageUploadServices.imageUpload(imageFiles);
 
     const createdEvent = await eventServices.createEvent(
       {
         ...eventData,
-        imageUrl,
+        images,
       },
       userId
     );

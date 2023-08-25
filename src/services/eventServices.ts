@@ -9,7 +9,7 @@ const selectedFields = [
   "price",
   "capacity",
   "date",
-  "imageUrl",
+  "images",
   "location",
 ];
 
