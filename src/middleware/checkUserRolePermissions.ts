@@ -33,7 +33,7 @@ export const checkUserRolePermissions = (requiredRoles: string[]) => {
           .json({ message: "Access denied: insufficient role" });
       }
 
-      req.body.id = data.user?.id;
+      req.body.userId = data.user?.id;
       next();
     } catch (error) {
       return res.status(500).json({ message: "Internal server error" });
