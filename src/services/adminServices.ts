@@ -8,6 +8,10 @@ const verifyEORegistration = async (id: string, status: string) => {
     .eq("id", id)
     .single();
 
+  if (error) {
+    throw new ResponseError(500, "Error verifying event organizer registration");
+  }
+
   if (!user) {
     throw new ResponseError(404, "User not found");
   }
@@ -19,6 +23,10 @@ const verifyEventCreationRequest = async (id: string, status: string) => {
     .update({ status })
     .eq("id", id)
     .single();
+
+  if (error) {
+    throw new ResponseError(500, "Error verifying event creation request");
+  }
 
   if (!event) {
     throw new ResponseError(404, "Event not found");
