@@ -24,13 +24,13 @@ export const checkUserRolePermissions = (requiredRoles: string[]) => {
       if (!userRole) {
         return res
           .status(403)
-          .json({ message: "Access denied: insufficient role" });
+          .json({ message: "insufficient role" });
       }
-
+      
       if (!requiredRoles.includes(userRole)) {
         return res
           .status(403)
-          .json({ message: "Access denied: insufficient role" });
+          .json({ message: "Forbidden" });
       }
 
       req.body.userId = data.user?.id;
