@@ -5,17 +5,26 @@ import { signUpService } from "../services/signUpService";
 import { signInService } from "../services/signInService";
 import { sessionService } from "../services/sessionService";
 import { signOutService } from "../services/signOutService";
+import adminController from "../controllers/adminController";
+import { checkUserRolePermissions } from "../middleware/checkUserRolePermissions";
 
-export const publicRouter = Router();
+export const router = Router();
 
 // Sign Up
-publicRouter.post("/sign-up", validateSchema(signUpBodySchema), signUpService);
+router.post("/sign-up", validateSchema(signUpBodySchema), signUpService);
 
 // Sign In
-publicRouter.post("/sign-in", validateSchema(signInBodySchema), signInService);
+router.post("/sign-in", validateSchema(signInBodySchema), signInService);
 
 // Sign Out
-publicRouter.get("/sign-out", signOutService);
+router.get("/sign-out", signOutService);
 
 // Check Session
-publicRouter.get("/session", sessionService);
+router.get("/session", sessionService);
+
+// admin
+const adminMiddleware = checkUserRolePermissions(["admin"]);
+router.post("/admin/events/:id/verify", adminMiddleware, adminController.verifyEventCreationRequest)
+router.post("/admin/event-organizer/verify", adminMiddleware, adminController.verifyEORegistration)
+router.get("/admin/events", adminMiddleware, adminController.verifyEORegistration)
+router.get("/admin/users", adminMiddleware, adminController.verifyEORegistration)
