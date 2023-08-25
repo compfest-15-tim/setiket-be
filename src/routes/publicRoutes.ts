@@ -9,6 +9,7 @@ import adminController from "../controllers/adminController";
 import { checkUserRolePermissions } from "../middleware/checkUserRolePermissions";
 import { errorMiddleware } from "../middleware/errorMiddleware";
 import eventController from "../controllers/eventController";
+import userController from "../controllers/userController";
 
 const router = Router();
 
@@ -26,6 +27,11 @@ router.get("/session", sessionService);
 
 router.get("/events", eventController.getAllEvent);
 router.get("/events/:id", eventController.getEventById);
+
+// require auth/session
+const authMiddleware = checkUserRolePermissions(["ADMIN", "EVENT_ORGANIZER", "CUSTOMER"]);
+router.post("/user/topup", authMiddleware, userController.topupBalance)
+router.post("/user/withdraw", authMiddleware, userController.withdrawBalance)
 
 // event organizer
 const eventOrganizerMiddleware = checkUserRolePermissions(["ADMIN", "EVENT_ORGANIZER"]);
