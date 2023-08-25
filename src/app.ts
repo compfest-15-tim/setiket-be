@@ -1,7 +1,6 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-// import { errorMiddleware } from "./middleware/errorMiddleware";
 import publicRoutes from "./routes/publicRoutes";
 import bodyParser from "body-parser";
 import multer from "multer";
