@@ -19,7 +19,7 @@ export const eventCreationSchema = z.object({
 
 export const createEventParamsSchema = z.object({
   eventData: eventCreationSchema,
-  imageUrl: z.array(z.string()), // Assuming imageUrls is an array of strings
+  images: z.array(z.string()), // Assuming imageUrls is an array of strings
 });
 
 export const signUpBodySchema = z.object({
