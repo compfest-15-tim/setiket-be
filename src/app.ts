@@ -20,7 +20,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Parse FormData in body request
-app.use(upload.none());
+app.use(upload.any());
 
 // Public router
 app.use("/api", publicRoutes);
