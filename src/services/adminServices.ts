@@ -1,9 +1,10 @@
 import { supabase } from "../config/db";
 import { ResponseError } from "../error/responseError";
+import { StatusEnum } from "../types/db.schema";
 
-const verifyEORegistration = async (id: string, status: string) => {
+const verifyEORegistration = async (id: string, status: StatusEnum) => {
   const { data: user, error } = await supabase
-    .from("User")
+    .from("users")
     .update({ status })
     .eq("id", id)
     .single();
@@ -17,9 +18,9 @@ const verifyEORegistration = async (id: string, status: string) => {
   }
 };
 
-const verifyEventCreationRequest = async (id: string, status: string) => {
+const verifyEventCreationRequest = async (id: string, status: StatusEnum) => {
   const { data: event, error } = await supabase
-    .from("Event")
+    .from("users")
     .update({ status })
     .eq("id", id)
     .single();
