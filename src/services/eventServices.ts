@@ -15,7 +15,7 @@ const selectedFields = [
 
 const getEventById = async (id: string) => {
   const { data: event, error } = await supabase
-    .from("Event")
+    .from("events")
     .select(selectedFields.join(","))
     .eq("id", id)
     .single();
@@ -31,7 +31,7 @@ const getEventById = async (id: string) => {
 
 const getAllEvent = async () => {
   const { data: events, error } = await supabase
-    .from("Event")
+    .from("events")
     .select(selectedFields.join(","));
 
   if (error) {
@@ -45,8 +45,8 @@ const getFilteredEvent = () => {};
 
 const createEvent = async (data: any, organizerId: string) => {
   const { data: createdEvent, error } = await supabase
-    .from("Event")
-    .insert({ ...data, organizerId: "0b99a906-cc0b-40e7-824f-014316ced250" })
+    .from("events")
+    .insert({ ...data, organizerId })
     .single();
 
   if (error) {
@@ -57,7 +57,7 @@ const createEvent = async (data: any, organizerId: string) => {
 };
 
 const deleteEvent = async (id: string) => {
-  const { error } = await supabase.from("Event").delete().eq("id", id).single();
+  const { error } = await supabase.from("events").delete().eq("id", id).single();
 
   if (error) {
     throw new ResponseError(500, "Error deleting event");
