@@ -17,7 +17,12 @@ const port = process.env.PORT || 8000;
 //   credentials: true,
 // };
 // app.use(cors(corsOptions));
-app.use(cors());
+const allowedOrigins = ["https://setiket-fe.vercel.app/", "http://localhost:3000"]
+const corsOptions = {
+  origin: allowedOrigins,
+  credentials: true
+}
+app.use(cors(corsOptions));
 
 // Parse FormData in body request
 app.use(upload.any());
