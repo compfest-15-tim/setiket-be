@@ -33,15 +33,16 @@ export const checkUserRolePermissions = (requiredRoles: string[]) => {
       if (!userRole) {
         return res.status(403).json({ message: "insufficient role" });
       }
-      console.log(userRole);
+      
       if (!requiredRoles.includes(userRole)) {
         return res.status(403).json({ message: "Forbidden" });
       }
-
-      req.body.userId = data.user?.id;
+      
+      if (req.method !== "GET" ) req.body.userId = data.user?.id;
       next();
     } catch (error) {
-      return res.status(500).json({ message: "Internal server error" });
+      console.log(error)
+      return res.status(500).json({ message: `Internal server error` });
     }
   };
 };
