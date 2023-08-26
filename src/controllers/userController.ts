@@ -25,7 +25,20 @@ const withdrawBalance: RequestHandler = async (req, res, next) => {
   }
 };
 
+const getUserDetails: RequestHandler = async (req, res, next) => {
+  const { userId } = req.body;
+
+  try {
+    const user = await userServices.getUserDetails(userId);
+
+    return res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   topupBalance,
   withdrawBalance,
+  getUserDetails
 };
