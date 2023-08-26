@@ -1,5 +1,6 @@
 import { RequestHandler } from "express";
 import adminServices from "../services/adminServices";
+import { validateSchema } from "../lib/utils";
 
 const verifyEORegistration: RequestHandler = async (req, res, next) => {
   const { status } = req.body;
