@@ -39,14 +39,16 @@ const getEventById: RequestHandler = async (req, res, next) => {
 };
 
 const getAllEvent: RequestHandler = async (req, res, next) => {
-  const { date, location, category } = req.query;
-
-  // if (date || location || category) {
-  //   return await eventServices.getFilteredEvent();
-  // }
-  // console.log(date, location, category)
+  const { date, location, category } = req.query as EventQuery;
   try {
-    const events = await eventServices.getAllEvent();
+    let events;
+
+    if (date || location || category) {
+      // Only use the filters that are provided
+      events = await eventServices.getFilteredEvent(location, category, date);
+    } else {
+      events = await eventServices.getAllEvent();
+    }
 
     return res.status(200).json(events);
   } catch (error) {
@@ -71,3 +73,9 @@ export default {
   getAllEvent,
   deleteEvent,
 };
+
+export interface EventQuery {
+  date?: string;
+  location?: string;
+  category?: string;
+}
