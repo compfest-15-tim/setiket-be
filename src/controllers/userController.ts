@@ -37,8 +37,22 @@ const getUserDetails: RequestHandler = async (req, res, next) => {
   }
 };
 
+const bookEvent: RequestHandler = async (req, res, next) => {
+  const { userId, quantity } = req.body;
+  const { id: eventId } = req.params;
+
+  try {
+    await userServices.bookEvent(eventId, userId, quantity);
+
+    return res.status(201).json("Booking success");
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   topupBalance,
   withdrawBalance,
-  getUserDetails
+  bookEvent,
+  getUserDetails,
 };
