@@ -9,6 +9,7 @@ const selectedFields = [
   "category",
   "price",
   "capacity",
+  "booked",
   "date",
   "images",
   "location",
