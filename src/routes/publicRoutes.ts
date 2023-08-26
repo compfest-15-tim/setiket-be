@@ -32,6 +32,7 @@ router.get("/events/:id", eventController.getEventById);
 const authMiddleware = checkUserRolePermissions(["ADMIN", "EVENT_ORGANIZER", "CUSTOMER"]);
 router.post("/user/topup", authMiddleware, userController.topupBalance)
 router.post("/user/withdraw", authMiddleware, userController.withdrawBalance)
+router.post("/user/current", authMiddleware, userController.getUserDetails)
 
 // event organizer
 const eventOrganizerMiddleware = checkUserRolePermissions(["ADMIN", "EVENT_ORGANIZER"]);
