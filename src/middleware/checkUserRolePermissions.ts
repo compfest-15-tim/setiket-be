@@ -20,22 +20,21 @@ export const checkUserRolePermissions = (requiredRoles: string[]) => {
           .json({ message: error.message });
       }
 
-      const { data: role, error: userError } = await supabase
+      const { data: user, error: userError } = await supabase
         .from("users")
-        .select("role")
-        .eq("id", data.user.id);
+        .select("*")
+        .eq("id", data.user.id)
+        .single();
 
-      if (!role) return res.status(404).json("User not found");
+      if (!user) return res.status(404).json("User not found");
 
-      const userRole = role.map((r) => {
-        return r.role as string;
-      });
-      
+      const userRole = user.role;
+
       if (!userRole) {
         return res.status(403).json({ message: "insufficient role" });
       }
-
-      if (!requiredRoles.includes(userRole[0])) {
+      console.log(userRole);
+      if (!requiredRoles.includes(userRole)) {
         return res.status(403).json({ message: "Forbidden" });
       }
 
