@@ -12,25 +12,17 @@ const verifyEORegistration = async (id: string, status: StatusEnum) => {
   if (error) {
     throw new ResponseError(500, "Error verifying event organizer registration");
   }
-
-  if (!user) {
-    throw new ResponseError(404, "User not found");
-  }
 };
 
 const verifyEventCreationRequest = async (id: string, status: StatusEnum) => {
   const { data: event, error } = await supabase
-    .from("users")
+    .from("events")
     .update({ status })
     .eq("id", id)
     .single();
 
   if (error) {
-    throw new ResponseError(500, "Error verifying event creation request");
-  }
-
-  if (!event) {
-    throw new ResponseError(404, "Event not found");
+    throw new ResponseError(500, `Error verifying event creation request, ${error.message}`);
   }
 };
 
