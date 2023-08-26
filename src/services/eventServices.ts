@@ -18,6 +18,7 @@ const getEventById = async (id: string) => {
     .from("events")
     .select(selectedFields.join(","))
     .eq("id", id)
+    .eq("status", "VERIFIED")
     .single();
 
   if (error) {
@@ -32,7 +33,8 @@ const getEventById = async (id: string) => {
 const getAllEvent = async () => {
   const { data: events, error } = await supabase
     .from("events")
-    .select(selectedFields.join(","));
+    .select(selectedFields.join(","))
+    .eq("status", "VERIFIED");
 
   if (error) {
     throw new ResponseError(500, "Error getting events");
@@ -43,13 +45,14 @@ const getAllEvent = async () => {
 
 const getFilteredEvent = () => {};
 
+// ROLE EO n ADMIN
 const createEvent = async (data: any, organizerId: string) => {
   const { data: createdEvent, error } = await supabase
     .from("events")
     .insert({ ...data, organizerId })
     .single();
 
-  console.log(data)
+  console.log(data);
 
   if (error) {
     throw new ResponseError(500, `Error creating event: ${error.message}`);
@@ -59,7 +62,11 @@ const createEvent = async (data: any, organizerId: string) => {
 };
 
 const deleteEvent = async (id: string) => {
-  const { error } = await supabase.from("events").delete().eq("id", id).single();
+  const { error } = await supabase
+    .from("events")
+    .delete()
+    .eq("id", id)
+    .single();
 
   if (error) {
     throw new ResponseError(500, "Error deleting event");
