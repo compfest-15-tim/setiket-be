@@ -17,6 +17,15 @@ export const eventCreationSchema = z.object({
   price: z.string().min(0),
 });
 
+export const verifyStatusSchema = z.object({
+  params: z.object({
+    id: z.string().min(1),
+  }),
+  body: z.object({
+    status: z.enum(["VERIFIED", "REJECTED"]),
+  }),
+});
+
 export const createEventParamsSchema = z.object({
   eventData: eventCreationSchema,
   images: z.array(z.string()), // Assuming imageUrls is an array of strings
@@ -39,4 +48,3 @@ export const signInBodySchema = z.object({
   }),
 });
 export type signInBodySchemaType = z.TypeOf<typeof signInBodySchema>;
-
