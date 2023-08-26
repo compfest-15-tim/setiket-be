@@ -33,14 +33,10 @@ router.get("/events", eventController.getAllEvent);
 router.get("/events/:id", eventController.getEventById);
 
 // require auth/session
-const authMiddleware = checkUserRolePermissions([
-  "ADMIN",
-  "EVENT_ORGANIZER",
-  "CUSTOMER",
-]);
-router.post("/user/topup", authMiddleware, userController.topupBalance);
-router.post("/user/withdraw", authMiddleware, userController.withdrawBalance);
-// router.post("/user/current", authMiddleware, userController.getUserDetails);
+const authMiddleware = checkUserRolePermissions(["ADMIN", "EVENT_ORGANIZER", "CUSTOMER"]);
+router.post("/user/topup", authMiddleware, userController.topupBalance)
+router.post("/user/withdraw", authMiddleware, userController.withdrawBalance)
+router.post("/user/current", authMiddleware, userController.getUserDetails)
 
 // event organizer
 const eventOrganizerMiddleware = checkUserRolePermissions([

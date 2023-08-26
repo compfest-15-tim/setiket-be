@@ -18,7 +18,7 @@ export const signOutService = async (req: Request, res: Response) => {
       maxAge: 0,
       sameSite: "none",
       secure: true,
-      domain: getClientDomain(),
+      // domain: getClientDomain(),
       path: "/",
     })
     .status(200)
