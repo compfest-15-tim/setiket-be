@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 // export const userRegistrationSchema = z.object({
 //   fullName: z.string().min(3),
@@ -22,7 +22,7 @@ export const verifyStatusSchema = z.object({
     id: z.string().min(1),
   }),
   body: z.object({
-    status: z.enum(["VERIFIED", "REJECTED"]),
+    status: z.enum(['VERIFIED', 'REJECTED']),
   }),
 });
 
@@ -36,7 +36,7 @@ export const signUpBodySchema = z.object({
     email: z.string().email(),
     fullName: z.string(),
     password: z.string().min(8),
-    role: z.enum(["CUSTOMER", "EVENT_ORGANIZER"]),
+    role: z.enum(['CUSTOMER', 'EVENT_ORGANIZER']),
   }),
 });
 export type signUpBodySchemaType = z.TypeOf<typeof signUpBodySchema>;

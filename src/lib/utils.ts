@@ -1,6 +1,6 @@
-import type { NextFunction, Request, Response } from "express";
-import type { AnyZodObject } from "zod";
-import dotenv from "dotenv";
+import type { NextFunction, Request, Response } from 'express';
+import type { AnyZodObject } from 'zod';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -17,15 +17,15 @@ export const validateSchema =
       return next();
     } catch (e) {
       // Error
-      return res.status(400).json({ message: "Invalid data input!" });
+      return res.status(400).json({ message: 'Invalid data input!' });
     }
   };
 
 export const getClientDomain = () => {
   // Development
-  if (process.env.NODE_ENV == "development") return "localhost";
+  if (process.env.NODE_ENV == 'development') return 'localhost';
 
   // Production
-  const clientUrl = process.env.CLIENT_URL + "";
-  return clientUrl.replace(/^https?:\/\//, "");
+  const clientUrl = process.env.CLIENT_URL + '';
+  return clientUrl.replace(/^https?:\/\//, '');
 };

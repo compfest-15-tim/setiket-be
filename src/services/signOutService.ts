@@ -1,6 +1,6 @@
-import { supabase } from "../config/db";
-import { Request, Response } from "express";
-import { getClientDomain } from "../lib/utils";
+import { supabase } from '../config/db';
+import { Request, Response } from 'express';
+import { getClientDomain } from '../lib/utils';
 
 export const signOutService = async (req: Request, res: Response) => {
   // Connect supabase auth
@@ -14,13 +14,13 @@ export const signOutService = async (req: Request, res: Response) => {
 
   // Success
   res
-    .cookie("accessToken", undefined, {
+    .cookie('accessToken', undefined, {
       maxAge: 0,
-      sameSite: "none",
+      sameSite: 'none',
       secure: true,
       // domain: getClientDomain(),
-      path: "/",
+      path: '/',
     })
     .status(200)
-    .json({ message: "Sign out success" });
+    .json({ message: 'Sign out success' });
 };

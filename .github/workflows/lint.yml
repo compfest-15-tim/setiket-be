@@ -28,4 +28,4 @@ jobs:
           auto_fix: true
           eslint: true
           prettier: true
-          git_email: "dewantorotriatmojo@gmail.com" 
+          git_email: 'dewantorotriatmojo@gmail.com'

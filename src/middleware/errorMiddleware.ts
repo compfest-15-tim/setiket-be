@@ -1,12 +1,12 @@
-import { NextFunction, Request, Response } from "express";
-import { z } from "zod";
-import { ResponseError } from "../error/responseError";
+import { NextFunction, Request, Response } from 'express';
+import { z } from 'zod';
+import { ResponseError } from '../error/responseError';
 
 export const errorMiddleware = (
   err: Error | z.ZodError,
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   if (!err) {
     next();
@@ -16,7 +16,7 @@ export const errorMiddleware = (
   if (err instanceof z.ZodError) {
     return res
       .status(400)
-      .json({ error: "Validation failed", details: err.issues })
+      .json({ error: 'Validation failed', details: err.issues })
       .end();
   }
 
@@ -29,5 +29,8 @@ export const errorMiddleware = (
       .end();
   }
 
-  res.status(500).json({ error: `Internal server error ${err}` }).end();
+  res
+    .status(500)
+    .json({ error: `Internal server error ${err}` })
+    .end();
 };
