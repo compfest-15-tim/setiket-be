@@ -49,8 +49,10 @@ const createEvent = async (data: any, organizerId: string) => {
     .insert({ ...data, organizerId })
     .single();
 
+  console.log(data)
+
   if (error) {
-    throw new ResponseError(500, "Error creating event");
+    throw new ResponseError(500, `Error creating event: ${error.message}`);
   }
 
   return createdEvent;

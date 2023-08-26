@@ -42,7 +42,7 @@ router.delete("/events/:id", eventOrganizerMiddleware, eventController.deleteEve
 const adminMiddleware = checkUserRolePermissions(["ADMIN"]);
 router.post("/admin/events/:id/verify", adminMiddleware, adminController.verifyEventCreationRequest)
 router.post("/admin/event-organizer/verify", adminMiddleware, adminController.verifyEORegistration)
-router.get("/admin/events", adminMiddleware, adminController.verifyEORegistration)
+router.get("/admin/events", adminMiddleware, adminController.getAllEvents)
 router.get("/admin/users", adminMiddleware, adminController.verifyEORegistration)
 
 router.use(errorMiddleware);

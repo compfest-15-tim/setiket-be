@@ -34,7 +34,21 @@ const verifyEventCreationRequest = async (id: string, status: StatusEnum) => {
   }
 };
 
+const getAllEvents = async () => {
+  const { data: events, error } = await supabase
+    .from("events")
+    .select("*");
+
+  if (error) {
+    throw new ResponseError(500, "Error getting events");
+  }
+
+  return events;
+};
+
+
 export default {
   verifyEORegistration,
   verifyEventCreationRequest,
+  getAllEvents
 };

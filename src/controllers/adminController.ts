@@ -27,11 +27,23 @@ const verifyEventCreationRequest: RequestHandler = async (req, res, next) => {
   }
 };
 
-const getAllUsers: RequestHandler = async (req, res) => {};
+const getAllUsers: RequestHandler = async (req, res) => {
 
-const getAllEvents: RequestHandler = async (req, res) => {};
+};
+
+const getAllEvents: RequestHandler = async (req, res, next) => {
+  try {
+    const events = await adminServices.getAllEvents();
+
+    return res.status(200).json(events);
+  } catch (error) {
+    next(error);
+  }
+};
 
 export default {
   verifyEventCreationRequest,
   verifyEORegistration,
+  getAllUsers,
+  getAllEvents
 };
