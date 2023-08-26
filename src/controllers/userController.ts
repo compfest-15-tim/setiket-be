@@ -51,7 +51,7 @@ const bookEvent: RequestHandler = async (req, res, next) => {
 };
 
 const getUpcomingEvent: RequestHandler = async (req, res, next) => {
-  const userId  = req.userId;
+  const userId = req.userId;
 
   try {
     const transactions = await userServices.getUpcomingEvent(userId!);
@@ -67,5 +67,5 @@ export default {
   withdrawBalance,
   bookEvent,
   getUserDetails,
-  getUpcomingEvent
+  getUpcomingEvent,
 };

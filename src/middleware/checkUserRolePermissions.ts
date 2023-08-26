@@ -37,7 +37,7 @@ export const checkUserRolePermissions = (requiredRoles: string[]) => {
       if (!requiredRoles.includes(userRole)) {
         return res.status(403).json({ message: 'Forbidden' });
       }
-      
+
       req.userId = data.user?.id;
       next();
     } catch (error) {

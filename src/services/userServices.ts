@@ -117,7 +117,7 @@ const bookEvent = async (eventId: string, userId: string, quantity: number) => {
   if (updateEventError) {
     throw new ResponseError(
       500,
-      `Error updating event ${updateEventError.message}`
+      `Error updating event ${updateEventError.message}`,
     );
   }
 
@@ -132,7 +132,7 @@ const bookEvent = async (eventId: string, userId: string, quantity: number) => {
   if (updateUserError) {
     throw new ResponseError(
       500,
-      `Error updating user ${updateUserError.message}`
+      `Error updating user ${updateUserError.message}`,
     );
   }
 
@@ -152,13 +152,13 @@ const bookEvent = async (eventId: string, userId: string, quantity: number) => {
 
 const getUpcomingEvent = async (userId: string) => {
   const { data: myTransaction, error } = await supabase
-    .from("transactions")
-    .select("*")
-    .eq("user_id", userId);
+    .from('transactions')
+    .select('*')
+    .eq('user_id', userId);
 
-    if(!myTransaction) throw new ResponseError(404, "No transactions found")
+  if (!myTransaction) throw new ResponseError(404, 'No transactions found');
 
-    return myTransaction
+  return myTransaction;
 };
 
 export default {
@@ -166,5 +166,5 @@ export default {
   withdrawBalance,
   bookEvent,
   getUserDetails,
-  getUpcomingEvent
+  getUpcomingEvent,
 };

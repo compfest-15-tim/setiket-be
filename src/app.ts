@@ -9,7 +9,10 @@ const upload = multer();
 dotenv.config();
 const port = process.env.PORT || 8000;
 
-const allowedOrigins = ["https://setiket-fe.vercel.app/", "http://localhost:3000"]
+const allowedOrigins = [
+  'https://setiket-fe.vercel.app/',
+  'http://localhost:3000',
+];
 const corsOptions = {
   origin: allowedOrigins,
   credentials: true,
