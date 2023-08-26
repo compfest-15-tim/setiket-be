@@ -29,7 +29,7 @@ export const signInService = async (req: Request, res: Response) => {
       httpOnly: true,
       sameSite: "none",
       secure: true,
-      domain: getClientDomain(),
+      // domain: getClientDomain(),
       path: "/",
     })
     .status(200)
