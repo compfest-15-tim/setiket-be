@@ -76,7 +76,7 @@ const getUserDetails = async (id: string) => {
 };
 
 const bookEvent = async (eventId: string, userId: string, quantity: number) => {
-  console.log(eventId, userId, quantity)
+  console.log(eventId, userId, quantity);
   const { data: event, error: eventError } = await supabase
     .from("events")
     .select("price, capacity, booked")
@@ -115,7 +115,10 @@ const bookEvent = async (eventId: string, userId: string, quantity: number) => {
     .single();
 
   if (updateEventError) {
-    throw new ResponseError(500, `Error updating event ${updateEventError.message}`);
+    throw new ResponseError(
+      500,
+      `Error updating event ${updateEventError.message}`
+    );
   }
 
   const updatedUserBalance = user.balance! - totalPrice;
@@ -127,7 +130,10 @@ const bookEvent = async (eventId: string, userId: string, quantity: number) => {
     .single();
 
   if (updateUserError) {
-    throw new ResponseError(500, `Error updating user ${updateUserError.message}`);
+    throw new ResponseError(
+      500,
+      `Error updating user ${updateUserError.message}`
+    );
   }
 
   const { data: transactionData, error: transactionError } = await supabase
@@ -141,12 +147,24 @@ const bookEvent = async (eventId: string, userId: string, quantity: number) => {
     ])
     .single();
 
-    return transactionData
+  return transactionData;
+};
+
+const getUpcomingEvent = async (userId: string) => {
+  const { data: myTransaction, error } = await supabase
+    .from("transactions")
+    .select("*")
+    .eq("user_id", userId);
+
+    if(!myTransaction) throw new ResponseError(404, "No transactions found")
+
+    return myTransaction
 };
 
 export default {
   topupBalance,
   withdrawBalance,
   bookEvent,
-  getUserDetails
+  getUserDetails,
+  getUpcomingEvent
 };

@@ -9,14 +9,6 @@ const upload = multer();
 dotenv.config();
 const port = process.env.PORT || 8000;
 
-// Cors
-// IMPORTANT TO WRITE COOKIE IN CLIENT SIDE WITH FETCH!
-// ALSO USE CREDENTIALS: "include" IN FETCH!
-// const corsOptions = {
-//   origin: process.env.CLIENT_URL,
-//   credentials: true,
-// };
-// app.use(cors(corsOptions));
 const allowedOrigins = ["https://setiket-fe.vercel.app/", "http://localhost:3000"]
 const corsOptions = {
   origin: allowedOrigins,

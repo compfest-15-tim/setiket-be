@@ -20,7 +20,7 @@ const createEvent: RequestHandler = async (req, res, next) => {
       userId
     );
 
-    return res.status(201).json(createdEvent);
+    return res.status(201).json("Event Created");
   } catch (error) {
     next(error);
   }
