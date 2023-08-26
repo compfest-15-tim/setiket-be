@@ -30,6 +30,7 @@ export const signInService = async (req: Request, res: Response) => {
       sameSite: "none",
       secure: true,
       domain: getClientDomain(),
+      path: "/",
     })
     .status(200)
     .json({

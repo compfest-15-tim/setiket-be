@@ -25,6 +25,7 @@ export const sessionService = async (req: Request, res: Response) => {
         sameSite: "none",
         secure: true,
         domain: getClientDomain(),
+        path: "/",
       })
       .status(400)
       .json({ message: error.message });
