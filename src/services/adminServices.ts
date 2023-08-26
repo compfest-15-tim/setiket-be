@@ -10,7 +10,10 @@ const verifyEORegistration = async (id: string, status: StatusEnum) => {
     .single();
 
   if (error) {
-    throw new ResponseError(500, "Error verifying event organizer registration");
+    throw new ResponseError(
+      500,
+      "Error verifying event organizer registration"
+    );
   }
 };
 
@@ -22,14 +25,15 @@ const verifyEventCreationRequest = async (id: string, status: StatusEnum) => {
     .single();
 
   if (error) {
-    throw new ResponseError(500, `Error verifying event creation request, ${error.message}`);
+    throw new ResponseError(
+      500,
+      `Error verifying event creation request, ${error.message}`
+    );
   }
 };
 
 const getAllEvents = async () => {
-  const { data: events, error } = await supabase
-    .from("events")
-    .select("*");
+  const { data: events, error } = await supabase.from("events").select("*");
 
   if (error) {
     throw new ResponseError(500, "Error getting events");
@@ -38,9 +42,19 @@ const getAllEvents = async () => {
   return events;
 };
 
+const getAllUsers = async () => {
+  const { data: users, error } = await supabase.from("users").select("*");
+
+  if (error) {
+    throw new ResponseError(500, "Error getting users");
+  }
+
+  return users;
+};
 
 export default {
   verifyEORegistration,
   verifyEventCreationRequest,
-  getAllEvents
+  getAllEvents,
+  getAllUsers
 };
