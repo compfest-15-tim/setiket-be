@@ -3,7 +3,7 @@ import { ResponseError } from "../error/responseError";
 
 const topupBalance = async (id: string, topupAmount: number) => {
   const { data: user, error } = await supabase
-    .from("User")
+    .from("users")
     .select("balance")
     .eq("id", id)
     .single();
@@ -19,7 +19,7 @@ const topupBalance = async (id: string, topupAmount: number) => {
   const newBalance = Number(user.balance) + Number(topupAmount);
 
   const { data: updatedUser, error: updateError } = await supabase
-    .from("User")
+    .from("users")
     .update({ balance: newBalance })
     .eq("id", id)
     .single();
@@ -33,7 +33,7 @@ const topupBalance = async (id: string, topupAmount: number) => {
 
 const withdrawBalance = async (id: string, withdrawAmount: number) => {
   const { data: user, error } = await supabase
-    .from("User")
+    .from("users")
     .select("balance")
     .eq("id", id)
     .single();

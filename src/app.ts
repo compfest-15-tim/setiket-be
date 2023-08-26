@@ -1,9 +1,7 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-// import { errorMiddleware } from "./middleware/errorMiddleware";
 import publicRoutes from "./routes/publicRoutes";
-import bodyParser from "body-parser";
 import multer from "multer";
 
 const app = express();
@@ -14,14 +12,15 @@ const port = process.env.PORT || 8000;
 // Cors
 // IMPORTANT TO WRITE COOKIE IN CLIENT SIDE WITH FETCH!
 // ALSO USE CREDENTIALS: "include" IN FETCH!
-const corsOptions = {
-  origin: process.env.CLIENT_URL,
-  credentials: true,
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: process.env.CLIENT_URL,
+//   credentials: true,
+// };
+// app.use(cors(corsOptions));
+app.use(cors());
 
 // Parse FormData in body request
-app.use(upload.none());
+app.use(upload.any());
 
 // Public router
 app.use("/api", publicRoutes);

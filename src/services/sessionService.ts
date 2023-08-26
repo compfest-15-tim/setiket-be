@@ -1,5 +1,6 @@
 import { supabase } from "../config/db";
 import { Request, Response } from "express";
+import { getClientDomain } from "../lib/utils";
 
 export const sessionService = async (req: Request, res: Response) => {
   // Get token data
@@ -19,7 +20,13 @@ export const sessionService = async (req: Request, res: Response) => {
   // Error getting current session, force logout
   if (error) {
     res
-      .cookie("accessToken", undefined, { maxAge: 0 })
+      .cookie("accessToken", undefined, {
+        maxAge: 0,
+        sameSite: "none",
+        secure: true,
+        domain: getClientDomain(),
+        path: "/",
+      })
       .status(400)
       .json({ message: error.message });
     return;

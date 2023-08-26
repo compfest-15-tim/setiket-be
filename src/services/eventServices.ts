@@ -9,15 +9,16 @@ const selectedFields = [
   "price",
   "capacity",
   "date",
-  "imageUrl",
+  "images",
   "location",
 ];
 
 const getEventById = async (id: string) => {
   const { data: event, error } = await supabase
-    .from("Event")
+    .from("events")
     .select(selectedFields.join(","))
     .eq("id", id)
+    .eq("status", "VERIFIED")
     .single();
 
   if (error) {
@@ -31,8 +32,9 @@ const getEventById = async (id: string) => {
 
 const getAllEvent = async () => {
   const { data: events, error } = await supabase
-    .from("Event")
-    .select(selectedFields.join(","));
+    .from("events")
+    .select(selectedFields.join(","))
+    .eq("status", "VERIFIED");
 
   if (error) {
     throw new ResponseError(500, "Error getting events");
@@ -43,21 +45,28 @@ const getAllEvent = async () => {
 
 const getFilteredEvent = () => {};
 
+// ROLE EO n ADMIN
 const createEvent = async (data: any, organizerId: string) => {
   const { data: createdEvent, error } = await supabase
-    .from("Event")
-    .insert({ ...data, organizerId: "0b99a906-cc0b-40e7-824f-014316ced250" })
+    .from("events")
+    .insert({ ...data, organizerId })
     .single();
 
+  console.log(data);
+
   if (error) {
-    throw new ResponseError(500, "Error creating event");
+    throw new ResponseError(500, `Error creating event: ${error.message}`);
   }
 
   return createdEvent;
 };
 
 const deleteEvent = async (id: string) => {
-  const { error } = await supabase.from("Event").delete().eq("id", id).single();
+  const { error } = await supabase
+    .from("events")
+    .delete()
+    .eq("id", id)
+    .single();
 
   if (error) {
     throw new ResponseError(500, "Error deleting event");

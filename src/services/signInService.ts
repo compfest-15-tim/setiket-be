@@ -1,6 +1,7 @@
 import { supabase } from "../config/db";
 import { Request, Response } from "express";
 import { type signInBodySchemaType } from "../dtos/validation.schema";
+import { getClientDomain } from "../lib/utils";
 
 export const signInService = async (req: Request, res: Response) => {
   // Get data
@@ -26,6 +27,10 @@ export const signInService = async (req: Request, res: Response) => {
   res
     .cookie("accessToken", data.session!.access_token, {
       httpOnly: true,
+      sameSite: "none",
+      secure: true,
+      domain: getClientDomain(),
+      path: "/",
     })
     .status(200)
     .json({

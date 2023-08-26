@@ -1,4 +1,5 @@
 import { supabase } from "../config/db";
+import uniqid from "uniqid"
 
 const imageUpload = async (files: Express.Multer.File[]) => {
   const imageUrls = [];
@@ -6,9 +7,10 @@ const imageUpload = async (files: Express.Multer.File[]) => {
   for (const file of files) {
     const { buffer, originalname } = file;
 
+    const uniqueId = uniqid()
     const { data, error } = await supabase.storage
       .from("events")
-      .upload(originalname, buffer, { cacheControl: "3600", upsert: false });
+      .upload(`eventimages-${originalname}-${uniqueId}`, buffer, { cacheControl: "3600", upsert: false });
 
     if (error) {
       console.error(`Error uploading file '${originalname}':`, error.message);
