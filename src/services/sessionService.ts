@@ -1,15 +1,15 @@
-import { supabase } from "../config/db";
-import { Request, Response } from "express";
-import { getClientDomain } from "../lib/utils";
+import { supabase } from '../config/db';
+import { Request, Response } from 'express';
+import { getClientDomain } from '../lib/utils';
 
 export const sessionService = async (req: Request, res: Response) => {
   // Get token data
-  const bearerHeader = req.headers["authorization"];
-  const token = bearerHeader?.split(" ")[1];
+  const bearerHeader = req.headers['authorization'];
+  const token = bearerHeader?.split(' ')[1];
 
   // No token provided
   if (!token || !bearerHeader) {
-    res.status(400).json({ message: "No token provided" });
+    res.status(400).json({ message: 'No token provided' });
     return;
   }
 
@@ -20,12 +20,12 @@ export const sessionService = async (req: Request, res: Response) => {
   // Error getting current session, force logout
   if (error) {
     res
-      .cookie("accessToken", undefined, {
+      .cookie('accessToken', undefined, {
         maxAge: 0,
-        sameSite: "none",
+        sameSite: 'none',
         secure: true,
         // domain: getClientDomain(),
-        path: "/",
+        path: '/',
       })
       .status(400)
       .json({ message: error.message });
@@ -33,5 +33,5 @@ export const sessionService = async (req: Request, res: Response) => {
   }
 
   // Success getting session, session still valid
-  res.status(200).json({ message: "Token valid", session: data.user });
+  res.status(200).json({ message: 'Token valid', session: data.user });
 };

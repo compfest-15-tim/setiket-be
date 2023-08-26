@@ -1,8 +1,8 @@
-import { RequestHandler } from "express";
-import { z } from "zod";
-import { eventCreationSchema } from "../dtos/validation.schema";
-import eventServices from "../services/eventServices";
-import imageUploadServices from "../services/imageUploadServices";
+import { RequestHandler } from 'express';
+import { z } from 'zod';
+import { eventCreationSchema } from '../dtos/validation.schema';
+import eventServices from '../services/eventServices';
+import imageUploadServices from '../services/imageUploadServices';
 
 const createEvent: RequestHandler = async (req, res, next) => {
   const { userId } = req.body;
@@ -17,10 +17,10 @@ const createEvent: RequestHandler = async (req, res, next) => {
         ...eventData,
         images,
       },
-      userId
+      userId,
     );
 
-    return res.status(201).json("Event Created");
+    return res.status(201).json('Event Created');
   } catch (error) {
     next(error);
   }

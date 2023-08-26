@@ -1,6 +1,6 @@
-import { RequestHandler } from "express";
-import adminServices from "../services/adminServices";
-import { validateSchema } from "../lib/utils";
+import { RequestHandler } from 'express';
+import adminServices from '../services/adminServices';
+import { validateSchema } from '../lib/utils';
 
 const verifyEORegistration: RequestHandler = async (req, res, next) => {
   const { status } = req.body;
@@ -22,7 +22,7 @@ const verifyEventCreationRequest: RequestHandler = async (req, res, next) => {
   try {
     await adminServices.verifyEventCreationRequest(id, status);
 
-    return res.status(200).json("OK");
+    return res.status(200).json('OK');
   } catch (error) {
     next(error);
   }

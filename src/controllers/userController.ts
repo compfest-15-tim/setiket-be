@@ -1,5 +1,5 @@
-import { RequestHandler } from "express";
-import userServices from "../services/userServices";
+import { RequestHandler } from 'express';
+import userServices from '../services/userServices';
 
 const topupBalance: RequestHandler = async (req, res, next) => {
   const { userId, amount } = req.body;
@@ -7,7 +7,7 @@ const topupBalance: RequestHandler = async (req, res, next) => {
   try {
     await userServices.topupBalance(userId, amount);
 
-    return res.status(200).json("Topup Success");
+    return res.status(200).json('Topup Success');
   } catch (error) {
     next(error);
   }
@@ -19,7 +19,7 @@ const withdrawBalance: RequestHandler = async (req, res, next) => {
   try {
     await userServices.withdrawBalance(userId, amount);
 
-    return res.status(200).json("Withdraw Success");
+    return res.status(200).json('Withdraw Success');
   } catch (error) {
     next(error);
   }
@@ -44,14 +44,14 @@ const bookEvent: RequestHandler = async (req, res, next) => {
   try {
     await userServices.bookEvent(eventId, userId, quantity);
 
-    return res.status(201).json("Booking success");
+    return res.status(201).json('Booking success');
   } catch (error) {
     next(error);
   }
 };
 
 const getUpcomingEvent: RequestHandler = async (req, res, next) => {
-  const userId  = req.userId;
+  const userId = req.userId;
 
   try {
     const transactions = await userServices.getUpcomingEvent(userId!);
@@ -67,5 +67,5 @@ export default {
   withdrawBalance,
   bookEvent,
   getUserDetails,
-  getUpcomingEvent
+  getUpcomingEvent,
 };
