@@ -12,11 +12,12 @@ const port = process.env.PORT || 8000;
 // Cors
 // IMPORTANT TO WRITE COOKIE IN CLIENT SIDE WITH FETCH!
 // ALSO USE CREDENTIALS: "include" IN FETCH!
-const corsOptions = {
-  origin: process.env.CLIENT_URL,
-  credentials: true,
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: process.env.CLIENT_URL,
+//   credentials: true,
+// };
+// app.use(cors(corsOptions));
+app.use(cors());
 
 // Parse FormData in body request
 app.use(upload.any());
