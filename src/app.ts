@@ -2,7 +2,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import publicRoutes from "./routes/publicRoutes";
-import bodyParser from "body-parser";
 import multer from "multer";
 
 const app = express();
