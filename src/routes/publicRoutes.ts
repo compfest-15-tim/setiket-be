@@ -1,6 +1,10 @@
 import { Router } from "express";
 import { validateSchema } from "../lib/utils";
-import { signInBodySchema, signUpBodySchema } from "../dtos/validation.schema";
+import {
+  signInBodySchema,
+  signUpBodySchema,
+  verifyStatusSchema,
+} from "../dtos/validation.schema";
 import { signUpService } from "../services/signUpService";
 import { signInService } from "../services/signInService";
 import { sessionService } from "../services/sessionService";
@@ -32,18 +36,32 @@ router.get("/events/:id", eventController.getEventById);
 const authMiddleware = checkUserRolePermissions(["ADMIN", "EVENT_ORGANIZER", "CUSTOMER"]);
 router.post("/user/topup", authMiddleware, userController.topupBalance)
 router.post("/user/withdraw", authMiddleware, userController.withdrawBalance)
+router.post("/user/current", authMiddleware, userController.getUserDetails)
 
 // event organizer
-const eventOrganizerMiddleware = checkUserRolePermissions(["ADMIN", "EVENT_ORGANIZER"]);
-router.post("/events", eventOrganizerMiddleware, eventController.createEvent);
-router.delete("/events/:id", eventOrganizerMiddleware, eventController.deleteEvent);
+const eventOrganizerMiddleware = checkUserRolePermissions([
+  "ADMIN",
+  "EVENT_ORGANIZER",
+]);
+router.post("/events", eventOrganizerMiddleware, eventController.createEvent); //validation inside controller
+router.delete("/events/:id",eventOrganizerMiddleware,eventController.deleteEvent);
 
 // admin
 const adminMiddleware = checkUserRolePermissions(["ADMIN"]);
-router.post("/admin/events/:id/verify", adminMiddleware, adminController.verifyEventCreationRequest)
-router.post("/admin/event-organizer/:id/verify", adminMiddleware, adminController.verifyEORegistration)
-router.get("/admin/events", adminMiddleware, adminController.getAllEvents)
-router.get("/admin/users", adminMiddleware, adminController.getAllUsers)
+router.post(
+  "/admin/events/:id/verify",
+  validateSchema(verifyStatusSchema),
+  adminMiddleware,
+  adminController.verifyEventCreationRequest
+);
+router.post(
+  "/admin/event-organizer/:id/verify",
+  validateSchema(verifyStatusSchema),
+  adminMiddleware,
+  adminController.verifyEORegistration
+);
+router.get("/admin/events", adminMiddleware, adminController.getAllEvents);
+router.get("/admin/users", adminMiddleware, adminController.getAllUsers);
 
 router.use(errorMiddleware);
 

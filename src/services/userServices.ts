@@ -50,7 +50,7 @@ const withdrawBalance = async (id: string, withdrawAmount: number) => {
 
   // Update the user's balance
   const { data: updatedUser, error: updateError } = await supabase
-    .from("User")
+    .from("users")
     .update({ balance: newBalance })
     .eq("id", id)
     .single();
@@ -62,7 +62,22 @@ const withdrawBalance = async (id: string, withdrawAmount: number) => {
   return updatedUser;
 };
 
+const getUserDetails = async (id: string) => {
+  const { data: user, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (!user) {
+    throw new ResponseError(404, "User not found");
+  }
+
+  return user;
+};
+
 export default {
   topupBalance,
   withdrawBalance,
+  getUserDetails
 };
