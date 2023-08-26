@@ -26,6 +26,8 @@ export const signInService = async (req: Request, res: Response) => {
   res
     .cookie("accessToken", data.session!.access_token, {
       httpOnly: true,
+      sameSite: "none",
+      secure: true,
     })
     .status(200)
     .json({

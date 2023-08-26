@@ -19,7 +19,11 @@ export const sessionService = async (req: Request, res: Response) => {
   // Error getting current session, force logout
   if (error) {
     res
-      .cookie("accessToken", undefined, { maxAge: 0 })
+      .cookie("accessToken", undefined, {
+        maxAge: 0,
+        sameSite: "none",
+        secure: true,
+      })
       .status(400)
       .json({ message: error.message });
     return;

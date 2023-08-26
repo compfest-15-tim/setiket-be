@@ -13,7 +13,11 @@ export const signOutService = async (req: Request, res: Response) => {
 
   // Success
   res
-    .cookie("accessToken", undefined, { maxAge: 0 })
+    .cookie("accessToken", undefined, {
+      maxAge: 0,
+      sameSite: "none",
+      secure: true,
+    })
     .status(200)
     .json({ message: "Sign out success" });
 };
