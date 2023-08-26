@@ -1,4 +1,5 @@
 import { supabase } from "../config/db";
+import { EventQuery } from "../controllers/eventController";
 import { ResponseError } from "../error/responseError";
 
 const selectedFields = [
@@ -43,7 +44,41 @@ const getAllEvent = async () => {
   return events;
 };
 
-const getFilteredEvent = () => {};
+const getFilteredEvent = async (
+  location: string | undefined,
+  category: string | undefined,
+  date: string | undefined
+) => {
+  let events;
+
+  // Construct the filtering conditions based on provided filters
+  let filter = {};
+  if (location) {
+    filter = { ...filter, location };
+  }
+  if (category) {
+    filter = { ...filter, category };
+  }
+  if (date) {
+    filter = { ...filter, date };
+  }
+
+  // Use Supabase to fetch filtered events
+  const { data, error } = await supabase
+    .from("events")
+    .select("*")
+    .eq("location", location)
+    .eq("category", category)
+    // .eq("date", date);
+
+  if (error) {
+    throw new ResponseError(500, `Error getting filtered events ${error.message}`);
+  }
+
+  events = data;
+
+  return events;
+};
 
 // ROLE EO n ADMIN
 const createEvent = async (data: any, organizerId: string) => {
