@@ -26,10 +26,10 @@ const withdrawBalance: RequestHandler = async (req, res, next) => {
 };
 
 const getUserDetails: RequestHandler = async (req, res, next) => {
-  const { userId } = req.body;
+  const userId = req.userId;
 
   try {
-    const user = await userServices.getUserDetails(userId);
+    const user = await userServices.getUserDetails(userId!);
 
     return res.status(200).json(user);
   } catch (error) {
@@ -50,9 +50,22 @@ const bookEvent: RequestHandler = async (req, res, next) => {
   }
 };
 
+const getUpcomingEvent: RequestHandler = async (req, res, next) => {
+  const userId  = req.userId;
+
+  try {
+    const transactions = await userServices.getUpcomingEvent(userId!);
+
+    return res.status(200).json(transactions);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   topupBalance,
   withdrawBalance,
   bookEvent,
   getUserDetails,
+  getUpcomingEvent
 };

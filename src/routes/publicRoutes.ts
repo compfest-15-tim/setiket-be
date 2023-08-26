@@ -36,8 +36,9 @@ router.get("/events/:id", eventController.getEventById);
 const authMiddleware = checkUserRolePermissions(["ADMIN", "EVENT_ORGANIZER", "CUSTOMER"]);
 router.post("/user/topup", authMiddleware, userController.topupBalance)
 router.post("/user/withdraw", authMiddleware, userController.withdrawBalance)
-router.post("/user/current", authMiddleware, userController.getUserDetails)
 router.post("/events/:id/book", authMiddleware, userController.bookEvent)
+router.get("/user/current", authMiddleware, userController.getUserDetails)
+router.get("/user/upcoming-events", authMiddleware, userController.getUpcomingEvent)
 
 // event organizer
 const eventOrganizerMiddleware = checkUserRolePermissions([
